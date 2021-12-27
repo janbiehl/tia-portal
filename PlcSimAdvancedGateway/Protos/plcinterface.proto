@@ -1,0 +1,158 @@
+syntax = "proto3";
+
+option csharp_namespace = "PlcInterface";
+
+package plc_interface;
+
+
+/* Specifies the memory area where a tag inside of the plc can be located*/
+enum MemoryArea {
+  MA_Invalid = 0;
+  MA_Input = 1;
+  MA_Marker = 2;
+  MA_Output = 3;
+  MA_Counter = 4;
+  MA_Timer = 5;
+  MA_DataBlock = 6;
+}
+
+/* The datatype that is used inside the plc for a tag */
+enum PlcDataType {
+  DT_Unknown = 0;
+  DT_Bool = 1;
+  DT_Byte = 2;
+  DT_Char = 3;
+  DT_Word = 4;
+  DT_Int = 5;
+  DT_DWord = 6;
+  DT_DInt = 7;
+  DT_Real = 8;
+  DT_Date = 9;
+  DT_TimeOfDay = 10; // 0x0000000A
+  DT_Time = 11; // 0x0000000B
+  DT_S5Time = 12; // 0x0000000C
+  DT_DateAndTime = 14; // 0x0000000E
+  DT_Struct = 17; // 0x00000011
+  DT_String = 19; // 0x00000013
+  DT_Counter = 28; // 0x0000001C
+  DT_Timer = 29; // 0x0000001D
+  DT_IEC_Counter = 30; // 0x0000001E
+  DT_IEC_Timer = 31; // 0x0000001F
+  DT_LReal = 48; // 0x00000030
+  DT_ULInt = 49; // 0x00000031
+  DT_LInt = 50; // 0x00000032
+  DT_LWord = 51; // 0x00000033
+  DT_USInt = 52; // 0x00000034
+  DT_UInt = 53; // 0x00000035
+  DT_UDInt = 54; // 0x00000036
+  DT_SInt = 55; // 0x00000037
+  DT_WChar = 61; // 0x0000003D
+  DT_WString = 62; // 0x0000003E
+  DT_LTime = 64; // 0x00000040
+  DT_LTimeOfDay = 65; // 0x00000041
+  DT_LDT = 66; // 0x00000042
+  DT_DTL = 67; // 0x00000043
+  DT_IEC_LTimer = 68; // 0x00000044
+  DT_IEC_SCounter = 69; // 0x00000045
+  DT_IEC_DCounter = 70; // 0x00000046
+  DT_IEC_LCounter = 71; // 0x00000047
+  DT_IEC_UCounter = 72; // 0x00000048
+  DT_IEC_USCounter = 73; // 0x00000049
+  DT_IEC_UDCounter = 74; // 0x0000004A
+  DT_IEC_ULCounter = 75; // 0x0000004B
+  DT_ErrorStruct = 97; // 0x00000061
+  DT_NREF = 98; // 0x00000062
+  DT_CREF = 101; // 0x00000065
+  DT_Aom_Ident = 128; // 0x00000080
+  DT_Event_Any = 129; // 0x00000081
+  DT_Event_Att = 130; // 0x00000082
+  DT_Event_HwInt = 131; // 0x00000083
+  DT_Hw_Any = 144; // 0x00000090
+  DT_Hw_IoSystem = 145; // 0x00000091
+  DT_Hw_DpMaster = 146; // 0x00000092
+  DT_Hw_Device = 147; // 0x00000093
+  DT_Hw_DpSlave = 148; // 0x00000094
+  DT_Hw_Io = 149; // 0x00000095
+  DT_Hw_Module = 150; // 0x00000096
+  DT_Hw_SubModule = 151; // 0x00000097
+  DT_Hw_Hsc = 152; // 0x00000098
+  DT_Hw_Pwm = 153; // 0x00000099
+  DT_Hw_Pto = 154; // 0x0000009A
+  DT_Hw_Interface = 155; // 0x0000009B
+  DT_Hw_IEPort = 156; // 0x0000009C
+  DT_OB_Any = 160; // 0x000000A0
+  DT_OB_Delay = 161; // 0x000000A1
+  DT_OB_Tod = 162; // 0x000000A2
+  DT_OB_Cyclic = 163; // 0x000000A3
+  DT_OB_Att = 164; // 0x000000A4
+  DT_Conn_Any = 168; // 0x000000A8
+  DT_Conn_Prg = 169; // 0x000000A9
+  DT_Conn_Ouc = 170; // 0x000000AA
+  DT_Conn_R_ID = 171; // 0x000000AB
+  DT_Port = 173; // 0x000000AD
+  DT_Rtm = 174; // 0x000000AE
+  DT_Pip = 175; // 0x000000AF
+  DT_OB_PCycle = 192; // 0x000000C0
+  DT_OB_HwInt = 193; // 0x000000C1
+  DT_OB_Diag = 195; // 0x000000C3
+  DT_OB_TimeError = 196; // 0x000000C4
+  DT_OB_Startup = 197; // 0x000000C5
+  DT_DB_Any = 208; // 0x000000D0
+  DT_DB_WWW = 209; // 0x000000D1
+  DT_DB_Dyn = 210; // 0x000000D2
+  DT_DB = 257; // 0x00000101
+}
+
+/* The primitive datatype that is used to store the value in the plc */
+enum PrimitiveDataType {
+  PDT_Unspecific = 0;
+  Struct = 1;
+  Bool = 2;
+  Int8 = 3;
+  Int16 = 4;
+  Int32 = 5;
+  Int64 = 6;
+  UInt8 = 7;
+  UInt16 = 8;
+  UInt32 = 9;
+  UInt64 = 10;
+  Float = 11;
+  Double = 12;
+  Char = 13;
+  WChar = 14;
+}
+
+/* Defines the tag that can be read from the plc via PLCSim Advanced */
+message PlcTag {
+  /* The name for this tag */
+  string name = 1;
+  /* The memory area where this tag is located in */
+  MemoryArea area = 2;
+  /* The datatype that is used for this tag inside the plc */
+  PlcDataType datatype = 3;
+  /* The primitive datatype that is used in memory for this tag */
+  PrimitiveDataType primitive_data_type = 4;
+  /* The size of the tag in byte */
+  uint32 size = 5;
+  /* The byte offset when the tag is NOT stored in a datablock */ 
+  uint32 offset = 6;
+  /* The bit offset when the tag is NOT stored in a datablock */
+  uint32 bit = 7;
+  /* The index of this variable */
+  uint32 index = 8;
+}
+
+/* Request data that is used for a get tag request */
+message GetTagRequest {
+  
+}
+
+/* Response data that is received from a get tag request*/
+message GetTagResponse {
+  repeated PlcTag plc_tags = 1;
+}
+
+/* Service that is used to interact with a PLCSim plc */
+service PlcService {
+  rpc GetTags(GetTagRequest) returns (GetTagResponse);
+}
