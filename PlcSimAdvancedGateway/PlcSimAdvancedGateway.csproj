@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>PlcSimAdvancedGateway</AssemblyName>
+        <RootNamespace>PlcSimAdvancedGateway</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PlcSimAdvanced\PlcSimAdvanced.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Siemens.Simatic.Simulation.Runtime.Api.x64, Version=4.0.0.4303, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\PlcSimAdvanced\Dependencies\Siemens.Simatic.Simulation.Runtime.Api.x64.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

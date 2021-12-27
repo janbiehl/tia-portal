@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Siemens.Simatic.Simulation.Runtime.Api.x64, Version=4.0.0.4303, Culture=neutral, PublicKeyToken=null">
+        <HintPath>Dependencies\Siemens.Simatic.Simulation.Runtime.Api.x64.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>
