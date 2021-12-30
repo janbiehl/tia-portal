@@ -126,7 +126,7 @@ public class RuntimeManagerGateway
     }
     
     /// <summary>
-    /// Find a instance of a virtual controller in the Runtime Manager via its ID
+    /// Find a instance of a virtual controller in the Runtime Manager via its ID, and returns the interface to access it
     /// </summary>
     /// <param name="instanceId">The id for the instance</param>
     /// <returns>The interface for the found Instance, or null when it wasn't found</returns>
