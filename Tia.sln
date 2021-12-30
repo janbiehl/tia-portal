@@ -8,6 +8,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlcSimAdvancedGateway", "PlcSimAdvancedGateway\PlcSimAdvancedGateway.csproj", "{64774A0E-36AB-4D94-A0EE-A08D2CAE5F45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlcSimAdvancedProtos", "PlcSimAdvancedProtos\PlcSimAdvancedProtos.csproj", "{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +18,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F9D449F5-D60B-4326-A77C-6F35D80A466D} = {F6597253-2D74-4549-9420-72E12357669A}
 		{64774A0E-36AB-4D94-A0EE-A08D2CAE5F45} = {3C5E020D-509F-4DD9-835E-9CB95C3957B3}
+		{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6} = {F6597253-2D74-4549-9420-72E12357669A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{F9D449F5-D60B-4326-A77C-6F35D80A466D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -26,5 +29,9 @@ Global
 		{64774A0E-36AB-4D94-A0EE-A08D2CAE5F45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64774A0E-36AB-4D94-A0EE-A08D2CAE5F45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64774A0E-36AB-4D94-A0EE-A08D2CAE5F45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

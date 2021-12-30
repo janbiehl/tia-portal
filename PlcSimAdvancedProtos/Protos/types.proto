@@ -1,11 +1,9 @@
 syntax = "proto3";
 
-option csharp_namespace = "PlcInterface";
+package plc.interface;
+option csharp_namespace = "PlcSimAdvanced.Protos";
 
-package plc_interface;
-
-
-/* Specifies the memory area where a tag inside of the plc can be located*/
+/* Specifies the memory area where a tag inside of the plc can be stored */
 enum MemoryArea {
   MA_Invalid = 0;
   MA_Input = 1;
@@ -16,7 +14,7 @@ enum MemoryArea {
   MA_DataBlock = 6;
 }
 
-/* The datatype that is used inside the plc for a tag */
+/* The datatype a tag got on the plc side */
 enum PlcDataType {
   DT_Unknown = 0;
   DT_Bool = 1;
@@ -103,7 +101,7 @@ enum PlcDataType {
   DT_DB = 257; // 0x00000101
 }
 
-/* The primitive datatype that is used to store the value in the plc */
+/* The primitive datatype a tag got in memory on the plc side */
 enum PrimitiveDataType {
   PDT_Unspecific = 0;
   Struct = 1;
@@ -122,37 +120,8 @@ enum PrimitiveDataType {
   WChar = 14;
 }
 
-/* Defines the tag that can be read from the plc via PLCSim Advanced */
-message PlcTag {
-  /* The name for this tag */
-  string name = 1;
-  /* The memory area where this tag is located in */
-  MemoryArea area = 2;
-  /* The datatype that is used for this tag inside the plc */
-  PlcDataType datatype = 3;
-  /* The primitive datatype that is used in memory for this tag */
-  PrimitiveDataType primitive_data_type = 4;
-  /* The size of the tag in byte */
-  uint32 size = 5;
-  /* The byte offset when the tag is NOT stored in a datablock */ 
-  uint32 offset = 6;
-  /* The bit offset when the tag is NOT stored in a datablock */
-  uint32 bit = 7;
-  /* The index of this variable */
-  uint32 index = 8;
-}
-
-/* Request data that is used for a get tag request */
-message GetTagRequest {
-  
-}
-
-/* Response data that is received from a get tag request*/
-message GetTagResponse {
-  repeated PlcTag plc_tags = 1;
-}
-
-/* Service that is used to interact with a PLCSim plc */
-service PlcService {
-  rpc GetTags(GetTagRequest) returns (GetTagResponse);
+/* Information about a plc instance */
+message InstanceInfo {
+  int32 id = 1;
+  string name = 2;
 }
