@@ -63,7 +63,7 @@ public class RuntimeManagerGateway
     /// <returns>The interface for the new instance</returns>
     /// <exception cref="ArgumentException">A argument is not valid</exception>
     /// <exception cref="SimulationRuntimeException">Get detailed information from the error code</exception>
-    public PlcInstance RegisterInstance(string instanceName)
+    public PlcInstance? RegisterInstance(string instanceName)
     {
         if (string.IsNullOrWhiteSpace(instanceName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(instanceName));
