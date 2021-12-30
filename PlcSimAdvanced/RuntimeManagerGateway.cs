@@ -42,8 +42,8 @@ public class RuntimeManagerGateway
     /// </summary>
     /// <returns>The registered instances from the Runtime Manager</returns>
     /// <exception cref="SimulationRuntimeException">Get detailed information from the error code</exception>
-    public SInstanceInfo[] GetRegisteredInstances() => SimulationRuntimeManager.RegisteredInstanceInfo;
-
+    public SInstanceInfo[] RegisteredInstances => SimulationRuntimeManager.RegisteredInstanceInfo;
+    
     /// <summary>
     /// Register a new instance of a virtual controller in the Runtime Manager
     /// </summary>
