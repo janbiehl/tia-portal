@@ -24,7 +24,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet publish -c Release -o application
+      run: dotnet publish -c Release -o ./tia-portal/application
     - name: Upload
       uses: actions/upload-artifact@v2
       with:
