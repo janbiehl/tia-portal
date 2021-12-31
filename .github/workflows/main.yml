@@ -29,4 +29,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: application
-        path: "/application"
+        path: "/home/runner/work/tia-portal/tia-portal/application/"
