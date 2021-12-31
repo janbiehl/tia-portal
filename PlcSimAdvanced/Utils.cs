@@ -25,4 +25,20 @@ public static class Utils
 
         return stringBuilder.ToString();
     }
+
+    public static string GetIp(string[]? array)
+    {
+        if (array?.Length is not 4)
+            return "0.0.0.0";
+
+        StringBuilder builder = new();
+        
+        foreach (var s in array)
+        {
+            builder.Append(s);
+            builder.Append('.');
+        }
+
+        return builder.ToString();
+    }
 }

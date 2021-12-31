@@ -1,3 +1,4 @@
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using PlcSimAdvanced;
 using PlcSimAdvanced.Protos;
@@ -96,11 +97,7 @@ public class PlcSimAdvancedService : PlcSimAdvanced.Protos.PlcSimAdvancedService
             {
                 RegisterInstanceResponse response = new()
                 {
-                    Instance = new()
-                    {
-                        Id = _plcInstances[instanceInfo].Id,
-                        Name = _plcInstances[instanceInfo].Name
-                    }
+                    Instance = new(_plcInstances[instanceInfo])
                 };
 
                 return response;
@@ -116,14 +113,14 @@ public class PlcSimAdvancedService : PlcSimAdvanced.Protos.PlcSimAdvancedService
 
                 if (instance is null) 
                     continue;
+
+                // store the instance in our memory
+                _plcInstances.Add(new(instance), instance);
                 
+                // sent the result back to the caller
                 RegisterInstanceResponse response = new()
                 {
-                    Instance = new()
-                    {
-                        Id = instance.Id,
-                        Name = instance.Name
-                    }
+                    Instance = new(instance)
                 };
 
                 return response;
@@ -136,13 +133,14 @@ public class PlcSimAdvancedService : PlcSimAdvanced.Protos.PlcSimAdvancedService
                 await context.WriteResponseHeadersAsync(new()
                     {new(MessageHeader, "Successfully registered the instance")});
 
+                
+                // store the instance in our memory
+                _plcInstances.Add(new(newInstance), newInstance);
+                
+                // sent the result back to the caller
                 RegisterInstanceResponse response = new()
                 {
-                    Instance = new()
-                    {
-                        Id = newInstance.Id,
-                        Name = newInstance.Name
-                    }
+                    Instance = new(newInstance)
                 };
 
             }
@@ -158,5 +156,80 @@ public class PlcSimAdvancedService : PlcSimAdvanced.Protos.PlcSimAdvancedService
         }
 
         return new RegisterInstanceResponse();
+    }
+
+    public override 
+        Task<GetPlcInformationResponse> GetPlcInformation(GetPlcInformationRequest request, ServerCallContext context)
+    {
+        PlcInstance? plcInstance = null;
+
+        switch (request.Instance.DataOneofCase)
+        {
+            case InstanceInfoRequest.DataOneofOneofCase.Id:
+            {
+                if (request.Instance.Id is 0)
+                {
+                    context.Status = new Status(StatusCode.InvalidArgument, "The id may not be 0");
+                    return Task.FromResult<GetPlcInformationResponse>(new());
+                }
+                
+                foreach (var instance in _plcInstances)
+                {
+                    if (instance.Key.Id == request.Instance.Id)
+                        plcInstance = instance.Value;
+                }
+                
+                break;
+            }
+            case InstanceInfoRequest.DataOneofOneofCase.Name:
+            {
+                if (string.IsNullOrWhiteSpace(request.Instance.Name))
+                {
+                    context.Status = new Status(StatusCode.InvalidArgument,
+                        "The name may not be null, empty or only whitespace");
+
+                    return Task.FromResult<GetPlcInformationResponse>(new());
+                }
+
+                foreach (var instance in _plcInstances)
+                {
+                    if (instance.Key.Name == request.Instance.Name)
+                        plcInstance = instance.Value;
+                }
+                
+                break;
+            }
+            default:
+            {
+                context.Status = new(StatusCode.InvalidArgument, "Id or Name must be used");
+                return Task.FromResult<GetPlcInformationResponse>(new());
+            }
+        }
+        
+        if (plcInstance is null)
+        {
+            // TODO: Error here, no instance found
+            return Task.FromResult(new GetPlcInformationResponse());
+        }
+
+        GetPlcInformationResponse response = new()
+        {
+            CpuType = plcInstance.CpuType.ToString(),
+            CommunicationInterface = plcInstance.CommunicationInterface.ToString(),
+            ControllerName = plcInstance.ControllerName,
+            ControllerShortDesignation = plcInstance.ControllerShortDesignation,
+            ControllerIp = Utils.GetIp(plcInstance.ControllerIp),
+            // TODO: Add the ip suites from siemens
+            ControllerIpSuites = {  },
+            StoragePath = plcInstance.StoragePath,
+            OperatingState = plcInstance.OperatingState.ToString(),
+            ControllerTime = Timestamp.FromDateTime(plcInstance.Time),
+            ControllerTimescale = plcInstance.TimeScale,
+            OperatingMode = plcInstance.OperatingMode.ToString(),
+            IsSendSyncEventInDefaultModeEnabled = plcInstance.IsSendSyncEventInDefaultModeEnabled,
+            OverwrittenMinimalCycleTime = plcInstance.OverwrittenMinimalCycleTime
+        };
+
+        return Task.FromResult(response);
     }
 }

@@ -120,8 +120,41 @@ enum PrimitiveDataType {
   WChar = 14;
 }
 
+/* Defines the tag that can be read from the plc via PLCSim Advanced */
+message PlcTag {
+  /* The name for this tag */
+  string name = 1;
+  /* The memory area where this tag is located in */
+  MemoryArea area = 2;
+  /* The datatype that is used for this tag inside the plc */
+  PlcDataType datatype = 3;
+  /* The primitive datatype that is used in memory for this tag */
+  PrimitiveDataType primitive_data_type = 4;
+  /* The size of the tag in byte */
+  uint32 size = 5;
+  /* The byte offset when the tag is NOT stored in a datablock */
+  uint32 offset = 6;
+  /* The bit offset when the tag is NOT stored in a datablock */
+  uint32 bit = 7;
+  /* The index of this variable */
+  uint32 index = 8;
+}
+
 /* Information about a plc instance */
 message InstanceInfo {
   int32 id = 1;
   string name = 2;
+}
+
+message InstanceInfoRequest{
+  oneof data_oneof {
+    int32 id = 1;
+    string name = 2;
+  }
+}
+
+message SiemensIp {
+  string ip_address = 1;
+  string subnet_mask = 2;
+  string default_gateway = 3;
 }

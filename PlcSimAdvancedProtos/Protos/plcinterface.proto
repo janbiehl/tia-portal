@@ -4,36 +4,7 @@ package plc.interface;
 option csharp_namespace = "PlcSimAdvanced.Protos";
 
 import "Protos/types.proto";
-
-/* Defines the tag that can be read from the plc via PLCSim Advanced */
-message PlcTag {
-  /* The name for this tag */
-  string name = 1;
-  /* The memory area where this tag is located in */
-  MemoryArea area = 2;
-  /* The datatype that is used for this tag inside the plc */
-  PlcDataType datatype = 3;
-  /* The primitive datatype that is used in memory for this tag */
-  PrimitiveDataType primitive_data_type = 4;
-  /* The size of the tag in byte */
-  uint32 size = 5;
-  /* The byte offset when the tag is NOT stored in a datablock */
-  uint32 offset = 6;
-  /* The bit offset when the tag is NOT stored in a datablock */
-  uint32 bit = 7;
-  /* The index of this variable */
-  uint32 index = 8;
-}
-
-/* Request data that is used for a get tag request */
-message GetTagRequest {
-  
-}
-
-/* Response data that is received from a get tag request*/
-message GetTagResponse {
-  repeated PlcTag plc_tags = 1;
-}
+import "google/protobuf/timestamp.proto";
 
 /* Request for a GetVersion rpc call */
 message GetVersionRequest {
@@ -77,6 +48,26 @@ message RegisterInstanceResponse {
   InstanceInfo instance = 1;
 }
 
+message GetPlcInformationRequest {
+    InstanceInfoRequest instance = 1;
+}
+
+message GetPlcInformationResponse {
+  string cpu_type = 1;
+  string communication_interface = 2;
+  string controller_name = 3;
+  string controller_short_designation = 4;
+  string controller_ip = 5;
+  repeated SiemensIp controller_ip_suites = 6;
+  string storage_path = 7;
+  string operating_state = 8;
+  google.protobuf.Timestamp controller_time = 9;
+  double controller_timescale = 10;
+  string operating_mode = 11;
+  bool is_send_sync_event_in_default_mode_enabled = 12;
+  int64 overwritten_minimal_cycle_time = 13;
+}
+
 /* Service that is used to interact with a PLCSim plc */
 service PlcSimAdvancedService
 {
@@ -84,4 +75,5 @@ service PlcSimAdvancedService
   rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
   rpc GetRegisteredInstances(GetInstancesRequest) returns (GetInstancesResponse);
   rpc RegisterInstance(RegisterInstanceRequest) returns (RegisterInstanceResponse);
+  rpc GetPlcInformation(GetPlcInformationRequest) returns (GetPlcInformationResponse);
 }
