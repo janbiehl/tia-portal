@@ -145,15 +145,17 @@ public class RuntimeManagerGateway
         }
     }
     
-    
-
 #endregion
     
 #region CTOR
 
     public RuntimeManagerGateway()
     {
+#if !DEBUG_MAC
         Version = new SimulationRuntimeManagerVersion(SimulationRuntimeManager.Version);
+#else
+        Version = new SimulationRuntimeManagerVersion(0x10001); // this should correspond to version 1.1
+#endif
     }
 
 #endregion

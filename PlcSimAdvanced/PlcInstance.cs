@@ -12,26 +12,52 @@ public sealed class PlcInstance : IDisposable
     /// <summary>
     /// The instance ID that is used to identify the instance in the runtime manager
     /// </summary>
-    public int Id => _instance.ID;
+    public int Id
+    {
+#if DEBUG_MAC
+        get { return 0; }
+#else
+        get { return _instance.ID; }
+#endif
+    }
 
     /// <summary>
     /// The name that identifies the instance in the runtime manager
     /// </summary>
-    public string Name => _instance.Name;
-
+    public string Name
+    {
+#if DEBUG_MAC
+        get { return "Unspecific"; }
+#else
+        get { return _instance.Name; }
+#endif
+    }
+    
     /// <summary>
     /// The type of cpu that is used by the instance
     /// </summary>
     public ECPUType CpuType
     {
+#if DEBUG_MAC
+        get => ECPUType.CPU1500_Unspecified;
+        set { }
+#else
         get => _instance.CPUType;
         set => _instance.CPUType = value;
+#endif
     }
 
     /// <summary>
     /// The interface that is used for the communication
     /// </summary>
-    public ECommunicationInterface CommunicationInterface => _instance.CommunicationInterface;
+    public ECommunicationInterface CommunicationInterface
+    {
+#if DEBUG_MAC
+        get { return ECommunicationInterface.None; }
+#else
+        get { return _instance.CommunicationInterface; }
+#endif
+    }
 
     /// <summary>
     /// Removes the instance from the runtime manager
@@ -39,7 +65,13 @@ public sealed class PlcInstance : IDisposable
     /// <exception cref="InvalidOperationException"></exception>
     public void Unregister()
     {
-        if (_instance is null)
+        // TODO: Log the call
+
+#if DEBUG_MAC
+        return;
+#endif
+        
+      if (_instance is null)
             throw new InvalidOperationException("The instance is not set up properly");
         
         _instance.UnregisterInstance();
@@ -52,22 +84,50 @@ public sealed class PlcInstance : IDisposable
     /// <summary>
     /// The name from controller
     /// </summary>
-    public string ControllerName => _instance.ControllerName;
+    public string ControllerName
+    {
+#if DEBUG_MAC
+        get { return "Default Name"; }
+#else
+        get { return _instance.ControllerName; }
+#endif
+    }
 
     /// <summary>
     /// The short description from controller
     /// </summary>
-    public string ControllerShortDesignation => _instance.ControllerShortDesignation;
+    public string ControllerShortDesignation
+    {
+#if DEBUG_MAC
+        get { return "Default designation"; }
+#else
+        get { return _instance.ControllerShortDesignation; }
+#endif
+    }
 
     /// <summary>
     /// The ip address from the controller, or null when there was an error
     /// </summary>
-    public string[]? ControllerIp => _instance.ControllerIP.Length is 0 ? null : _instance.ControllerIP;
+    public string[]? ControllerIp
+    {
+#if DEBUG_MAC
+        get { return new[] {"0", "0", "0", "0"}; }
+#else
+        get { return _instance.ControllerIP.Length is 0 ? null : _instance.ControllerIP; }
+#endif
+    }
 
     /// <summary>
     /// The complete information for the ip addresses, or null when there was an errors
     /// </summary>
-    public SIPSuite4[]? ControllerIpSuite => _instance.ControllerIPSuite4.Length is 0 ? null : _instance.ControllerIPSuite4;
+    public SIPSuite4[]? ControllerIpSuite
+    {
+#if DEBUG_MAC
+        get { return null; }
+#else
+        get { return _instance.ControllerIPSuite4.Length is 0 ? null : _instance.ControllerIPSuite4; }
+#endif
+    }
 
     /// <summary>
     /// The path where the permanent data is saved on disk. Could be a network drive.
@@ -76,13 +136,19 @@ public sealed class PlcInstance : IDisposable
     /// <default>DOCUMENTS\Siemens\Simatic\Simulation\Runtime\Persistence\INSTANCE_NAME </default>
     public string StoragePath
     {
+#if DEBUG_MAC
+        get => "Dummy-path";
+#else
         get => _instance.StoragePath;
+#endif
         set
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new InvalidOperationException(ExceptionUtils.InvalidStringMessage);
             
+#if !DEBUG_MAC
             _instance.StoragePath = value;   
+#endif
         }
     }
 
@@ -106,6 +172,10 @@ public sealed class PlcInstance : IDisposable
             throw new InvalidOperationException(
                 "The virtual controller must be turned OFF to be able to create the archive ");
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.ArchiveStorage(filePath);
     }
 
@@ -129,7 +199,11 @@ public sealed class PlcInstance : IDisposable
             throw new InvalidOperationException(
                 "The virtual controller must be turned OFF to be able to retrieve the state from the archive");
         
-        _instance.ArchiveStorage(filePath);
+#if DEBUG_MAC
+        return;
+#endif
+        
+        _instance.RetrieveStorage(filePath);
     }
     
     public void CleanupStoragePath()
@@ -138,6 +212,10 @@ public sealed class PlcInstance : IDisposable
             throw new InvalidOperationException(
                 "The virtual controller must be turned OFF to be able to remove the virtual memory card");
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.CleanupStoragePath();
     }
 
@@ -148,8 +226,16 @@ public sealed class PlcInstance : IDisposable
     /// <summary>
     /// The current operating state the virtual controller is in
     /// </summary>
-    public EOperatingState OperatingState => _instance.OperatingState;
-    
+    public EOperatingState OperatingState
+    {
+#if DEBUG_MAC
+        get { return EOperatingState.Off; }
+#else
+        get { return _instance.OperatingState; }
+#endif
+    }
+
+
     /// <summary>
     /// Start the process for the virtual controller
     /// </summary>
@@ -162,6 +248,10 @@ public sealed class PlcInstance : IDisposable
         if (timeout <= 0)
             throw new ArgumentOutOfRangeException(nameof(timeout),
                 "The timeout must greater than 0, 60000 is recommended");
+        
+#if DEBUG_MAC
+        return ERuntimeErrorCode.OK;
+#endif
         
         var errorCode = _instance.PowerOn(timeout);
 
@@ -179,6 +269,10 @@ public sealed class PlcInstance : IDisposable
             throw new ArgumentOutOfRangeException(nameof(timeout),
                 "The timeout must greater than 0, 60000 is recommended");
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.PowerOff(timeout);
     }
     
@@ -195,6 +289,10 @@ public sealed class PlcInstance : IDisposable
 
         if (OperatingState is EOperatingState.Run or EOperatingState.Startup)
             return;
+        
+#if DEBUG_MAC
+        return;
+#endif
         
         _instance.Run(timeout);
     }
@@ -213,6 +311,10 @@ public sealed class PlcInstance : IDisposable
         if (OperatingState is EOperatingState.Stop)
             return;
         
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.Stop(timeout);
     }
 
@@ -227,6 +329,10 @@ public sealed class PlcInstance : IDisposable
             throw new ArgumentOutOfRangeException(nameof(timeout),
                 "The timeout must greater than 0, 60000 is recommended");
         
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.MemoryReset();
     }
 
@@ -238,7 +344,14 @@ public sealed class PlcInstance : IDisposable
     /// The filtered list with tags from the virtual controller
     /// </summary>
     /// <exception cref="SimulationRuntimeException"></exception>
-    public STagInfo[] TagInfos => _instance.TagInfos;
+    public STagInfo[] TagInfos
+    {
+#if DEBUG_MAC
+        get => Array.Empty<STagInfo>();
+#else
+        get => _instance.TagInfos;
+#endif
+    }
 
     /// <summary>
     /// Read the tag tables from the virtual controller 
@@ -248,6 +361,10 @@ public sealed class PlcInstance : IDisposable
     /// <exception cref="SimulationRuntimeException"></exception>
     public void UpdateTagList(ETagListDetails filter = ETagListDetails.IOM, bool hmiVisibleOnly = false)
     {
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.UpdateTagList(filter, hmiVisibleOnly);
     }
     
@@ -263,6 +380,10 @@ public sealed class PlcInstance : IDisposable
         // TODO: Validate the utility function 
         var dataBlockFilterString = Utils.GetDataBlockFilter(dataBlockFilter);
         
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.UpdateTagList(filter, hmiVisibleOnly, dataBlockFilterString);
     }
     
@@ -274,6 +395,13 @@ public sealed class PlcInstance : IDisposable
     /// <exception cref="SimulationRuntimeException"></exception>
     public void GetTagListStatus(out ETagListDetails details, out bool hmiVisibleOnly)
     {
+#if DEBUG_MAC
+        details = ETagListDetails.IOMCTDB;
+        hmiVisibleOnly = false;
+        
+        return;
+#endif
+        
         _instance.GetTagListStatus(out details, out hmiVisibleOnly);
     }
 
@@ -299,6 +427,10 @@ public sealed class PlcInstance : IDisposable
             File.Delete(filePath);
         }
 
+#if DEBUG_MAC
+        return true;
+#endif
+
         _instance.CreateConfigurationFile(filePath);
         return true;
     }
@@ -310,17 +442,38 @@ public sealed class PlcInstance : IDisposable
     /// <summary>
     /// The input area of the virtual controller
     /// </summary>
-    public IIOArea Inputs => _instance.InputArea;
-    
+    public IIOArea Inputs
+    {
+#if DEBUG_MAC
+        get => null;
+#else
+        get => _instance.InputArea;
+#endif
+    }
+
     /// <summary>
     /// The output area of the virtual controller
     /// </summary>
-    public IIOArea Outputs => _instance.OutputArea;
-    
+    public IIOArea Outputs
+    {
+#if DEBUG_MAC
+        get => null;
+#else
+        get => _instance.OutputArea;
+#endif
+    }
+
     /// <summary>
     /// The marker area of the virtual controller
     /// </summary>
-    public IIOArea Markers => _instance.MarkerArea;
+    public IIOArea Markers
+    {
+#if DEBUG_MAC
+        get => null;
+#else
+        get => _instance.MarkerArea;
+#endif
+    }
 
 #region ByAddress
     
@@ -775,6 +928,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
 
+#if DEBUG_MAC
+        return new SDataValue();
+#endif
+        
         return _instance.Read(tagName);
     }
     
@@ -782,6 +939,10 @@ public sealed class PlcInstance : IDisposable
     {
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
+        
+#if DEBUG_MAC
+        return false;
+#endif
         
         return _instance.ReadBool(tagName);
     }
@@ -791,6 +952,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
         
+#if DEBUG_MAC
+        return (sbyte) Char.MinValue;
+#endif
+        
         return _instance.ReadChar(tagName);
     } 
     
@@ -799,6 +964,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
         
+#if DEBUG_MAC
+        return Char.MinValue;
+#endif  
+        
         return _instance.ReadWChar(tagName);
     }
     
@@ -806,6 +975,10 @@ public sealed class PlcInstance : IDisposable
     {
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
+
+#if DEBUG_MAC
+        return 0.0;
+#endif
         
         return _instance.ReadDouble(tagName);
     }
@@ -815,6 +988,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
         
+#if DEBUG_MAC
+        return 0f;
+#endif
+        
         return _instance.ReadFloat(tagName);
     }
 
@@ -822,6 +999,10 @@ public sealed class PlcInstance : IDisposable
     {
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
+        
+#if DEBUG_MAC
+        return 0;
+#endif
         
         return _instance.ReadInt8(tagName);
     } 
@@ -831,6 +1012,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
         
+#if DEBUG_MAC
+        return 0;
+#endif
+        
         return _instance.ReadInt16(tagName);
     } 
     
@@ -838,6 +1023,10 @@ public sealed class PlcInstance : IDisposable
     {
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
+        
+#if DEBUG_MAC
+        return 0;
+#endif
         
         return _instance.ReadInt32(tagName);
     } 
@@ -847,6 +1036,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
         
+#if DEBUG_MAC
+        return 0;
+#endif
+        
         return _instance.ReadInt64(tagName);
     }
     
@@ -854,6 +1047,10 @@ public sealed class PlcInstance : IDisposable
     {
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
+        
+#if DEBUG_MAC
+        return 0;
+#endif
         
         return _instance.ReadUInt8(tagName);
     } 
@@ -863,6 +1060,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
         
+#if DEBUG_MAC
+        return 0;
+#endif
+        
         return _instance.ReadUInt16(tagName);
     } 
     
@@ -871,6 +1072,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
         
+#if DEBUG_MAC
+        return 0;
+#endif
+        
         return _instance.ReadUInt32(tagName);
     } 
     
@@ -878,6 +1083,10 @@ public sealed class PlcInstance : IDisposable
     {
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
+        
+#if DEBUG_MAC
+        return 0;
+#endif
         
         return _instance.ReadUInt64(tagName);
     }
@@ -890,6 +1099,10 @@ public sealed class PlcInstance : IDisposable
         if (signals.Length == 0) 
             throw new ArgumentException(ExceptionUtils.EmptyCollectionMessage, nameof(signals));
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.ReadSignals(ref signals);
     }
     
@@ -901,6 +1114,11 @@ public sealed class PlcInstance : IDisposable
         if (signals.Length == 0) 
             throw new ArgumentException(ExceptionUtils.EmptyCollectionMessage, nameof(signals));
 
+#if DEBUG_MAC
+        signalsHaveChanged = false;
+        return;
+#endif
+        
         _instance.ReadSignals(ref signals, out signalsHaveChanged);
     }
 
@@ -909,6 +1127,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.Write(tagName, dataValue);
     }
 
@@ -917,6 +1139,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.WriteBool(tagName, value);
     }
     
@@ -925,6 +1151,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
     
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.WriteChar(tagName, value);
     }
     
@@ -933,6 +1163,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.WriteWChar(tagName, value);
     }
     
@@ -941,6 +1175,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.WriteDouble(tagName, value);
     }
     
@@ -949,6 +1187,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.WriteFloat(tagName, value);
     }
     
@@ -957,6 +1199,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.WriteInt8(tagName, value);
     } 
     
@@ -965,6 +1211,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
    
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.WriteInt16(tagName, value);
     }
     
@@ -973,6 +1223,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.WriteInt32(tagName, value);
     }
     
@@ -981,6 +1235,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.WriteInt64(tagName, value);
     }
     
@@ -989,6 +1247,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
 
+#if DEBUG_MAC
+        return;
+#endif
+        
         _instance.WriteUInt8(tagName, value);
     }
     
@@ -996,6 +1258,10 @@ public sealed class PlcInstance : IDisposable
     {
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
+
+#if DEBUG_MAC
+        return;
+#endif
 
         _instance.WriteUInt16(tagName, value);
     }
@@ -1005,6 +1271,10 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
         
+#if DEBUG_MAC
+        return;
+#endif
+
         _instance.WriteUInt32(tagName, value);
     }
     
@@ -1012,6 +1282,10 @@ public sealed class PlcInstance : IDisposable
     {
         if (string.IsNullOrWhiteSpace(tagName))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(tagName));
+
+#if DEBUG_MAC
+        return;
+#endif
 
         _instance.WriteUInt64(tagName, value);
     }
@@ -1024,6 +1298,10 @@ public sealed class PlcInstance : IDisposable
         if (signals.Length == 0) 
             throw new ArgumentException(ExceptionUtils.EmptyCollectionMessage, nameof(signals));
 
+#if DEBUG_MAC
+        return;
+#endif
+
         _instance.WriteSignals(ref signals);
     }
     
@@ -1035,14 +1313,24 @@ public sealed class PlcInstance : IDisposable
 
     public DateTime Time
     {
+#if DEBUG_MAC
+        get => DateTime.Now;
+        set { }
+#else
         get => _instance.SystemTime;
         set => _instance.SystemTime = value;
+#endif
     }
 
     public double TimeScale
     {
+#if DEBUG_MAC
+        get => 1.0;
+        set { }
+#else
         get => _instance.ScaleFactor;
         set => _instance.ScaleFactor = value;
+#endif
     }
     
 #endregion
@@ -1051,29 +1339,52 @@ public sealed class PlcInstance : IDisposable
 
     public EOperatingMode OperatingMode
     {
+#if DEBUG_MAC
+        get => EOperatingMode.Default;
+        set { }
+#else
         get => _instance.OperatingMode;
         set => _instance.OperatingMode = value;
+#endif
     }
 
     public bool IsSendSyncEventInDefaultModeEnabled
     {
+#if DEBUG_MAC
+        get => true;
+        set { }
+#else
         get => _instance.IsSendSyncEventInDefaultModeEnabled;
         set => _instance.IsSendSyncEventInDefaultModeEnabled = value;
+#endif
     }
 
     public long OverwrittenMinimalCycleTime
     {
+#if DEBUG_MAC
+        get => 0;
+        set { }
+#else
         get => _instance.OverwrittenMinimalCycleTime_ns; 
         set => _instance.OverwrittenMinimalCycleTime_ns = value;
+#endif
     }
 
     public void RunToNextSyncPoint()
     {
+#if DEBUG_MAC
+        return;
+#endif
+
         _instance.RunToNextSyncPoint();
     }
 
     public void StartProcessing(long runTime)
     {
+#if DEBUG_MAC
+        return;
+#endif
+
         _instance.StartProcessing(runTime);
     }
 
@@ -1083,16 +1394,30 @@ public sealed class PlcInstance : IDisposable
             throw new InvalidOperationException(
                 "To use the specific mode you have to use the overload with the cycle time");
         
+#if DEBUG_MAC
+        return;
+#endif
+
         _instance.SetCycleTimeMonitoringMode(mode);
     }
     
     public void SetCycleTimeMonitoringMode(long maxCycleTime)
     {
+#if DEBUG_MAC
+        return;
+#endif
+
         _instance.SetCycleTimeMonitoringMode(ECycleTimeMonitoringMode.Specified, maxCycleTime);
     }
 
     public void GetCycleTimeMonitoringMode(out long maxCycleTime, out ECycleTimeMonitoringMode monitoringMode)
     {
+#if DEBUG_MAC
+        maxCycleTime = 150000;
+        monitoringMode = ECycleTimeMonitoringMode.Ignored;
+        return;
+#endif
+
         _instance.GetCycleTimeMonitoringMode(out monitoringMode, out maxCycleTime);
     }
 
@@ -1105,6 +1430,10 @@ public sealed class PlcInstance : IDisposable
 
     public void Dispose()
     {
+#if DEBUG_MAC
+        return;
+#endif
+
         _instance.Dispose();
     }
 }
