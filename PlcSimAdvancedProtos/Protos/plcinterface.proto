@@ -68,12 +68,348 @@ message GetPlcInformationResponse {
   int64 overwritten_minimal_cycle_time = 13;
 }
 
-/* Service that is used to interact with a PLCSim plc */
-service PlcSimAdvancedService
+message UnregisterInstanceRequest {
+  InstanceInfoRequest instance = 1;
+}
+
+message UnregisterInstanceResponse {
+}
+
+message SetStoragePathRequest {
+  InstanceInfoRequest instance = 1;
+  string storage_path = 2;
+}
+
+message SetStoragePathResponse {
+  InstanceInfo instance = 1;
+  string storage_path = 2;
+}
+
+message CreateStorageArchiveRequest {
+  InstanceInfoRequest instance = 1;
+  string archive_path = 2;
+  bool archive_overwrite = 3;
+}
+
+message CreateStorageArchiveResponse {
+  InstanceInfo instance = 1;
+  bool archive_created = 2;
+  bool archive_overwritten = 3;
+}
+
+message RetrieveStorageArchiveRequest {
+  InstanceInfoRequest instance = 1;
+  string archive_path = 2;
+}
+
+message RetrieveStorageArchiveResponse {
+  InstanceInfo instance = 1;
+}
+
+message CleanupControllerStorageRequest {
+  InstanceInfoRequest instance = 1;
+}
+
+message CleanupControllerStorageResponse {
+  InstanceInfo instance = 1;
+}
+
+message ControllerPowerOnRequest {
+  InstanceInfoRequest instance = 1;
+  uint32 timeout = 2;
+}
+
+message ControllerPowerOnResponse {
+  InstanceInfo instance = 1;
+  bool powered_on = 2;
+}
+
+message ControllerPowerOffRequest {
+  InstanceInfoRequest instance = 1;
+  uint32 timeout = 2;
+}
+
+message ControllerPowerOffResponse {
+  InstanceInfo instance = 1;
+  bool powered_off= 2;
+}
+
+message ControllerRunRequest {
+  InstanceInfoRequest instance = 1;
+  uint32 timeout = 2;
+}
+
+message ControllerRunResponse {
+  InstanceInfo instance = 1;
+  bool running = 2;
+}
+
+message ControllerStopRequest {
+  InstanceInfoRequest instance = 1;
+  uint32 timeout = 2;
+}
+
+message ControllerStopResponse {
+  InstanceInfo instance = 1;
+  bool stopped = 2;
+}
+
+message ControllerMemoryResetRequest {
+  InstanceInfoRequest instance = 1;
+  uint32 timeout = 2;
+}
+
+message ControllerMemoryResetResponse {
+  InstanceInfo instance = 1;
+}
+
+message GetTagInfoRequest {
+  InstanceInfoRequest instance = 1;
+  uint32 start_index = 2;
+  uint32 count = 3;
+}
+
+message GetTagInfoResponse {
+  InstanceInfo instance = 1;
+  repeated PlcTag plc_tags = 2;
+}
+
+message UpdateTagListRequest {
+  InstanceInfoRequest instance = 1;
+  TagListDetails filter = 2;
+  bool hmi_visible_only = 3;
+  repeated string data_block_filter = 4;
+}
+
+message UpdateTagListResponse {
+  InstanceInfo instance = 1;
+}
+
+message GetTagListStatusRequest {
+  InstanceInfoRequest instance = 1;
+}
+
+message GetTagListStatusResponse {
+  InstanceInfo instance = 1;
+  TagListDetails filter = 2;
+  bool hmi_visible_only = 3;
+}
+
+message CreateConfigFileRequest {
+  InstanceInfoRequest instance = 1;
+  string file_path = 2;
+  bool overwrite_file = 3;
+}
+
+message CreateConfigFileResponse {
+  InstanceInfo instance = 1;
+  string file_path = 2;
+  bool file_overwritten = 3;
+}
+
+message ReadTagRequest {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+}
+
+message ReadBooleanResponse {
+  InstanceInfo instance = 1;
+  bool value = 2;
+}
+
+message ReadCharResponse {
+  InstanceInfo instance = 1;
+  bytes value = 2;
+}
+
+message ReadWCharResponse {
+  InstanceInfo instance = 1;
+  bytes value = 2;
+}
+
+message ReadDoubleResponse {
+  InstanceInfo instance = 1;
+  double value = 2;
+}
+
+message ReadFloatResponse {
+  InstanceInfo instance = 1;
+  float value = 2;
+}
+
+message ReadInt8Response {
+  InstanceInfo instance = 1;
+  int32 value = 2;
+}
+
+message ReadInt16Response {
+  InstanceInfo instance = 1;
+  int32 value = 2;
+}
+
+message ReadInt32Response {
+  InstanceInfo instance = 1;
+  int32 value = 2;
+}
+
+message ReadInt64Response {
+  InstanceInfo instance = 1;
+  int64 value = 2;
+}
+
+message ReadUInt8Response {
+  InstanceInfo instance = 1;
+  uint32 value = 2;
+}
+
+message ReadUInt16Response {
+  InstanceInfo instance = 1;
+  uint32 value = 2;
+}
+
+message ReadUInt32Response {
+  InstanceInfo instance = 1;
+  uint32 value = 2;
+}
+
+message ReadUInt64Response {
+  InstanceInfo instance = 1;
+  uint64 value = 2;
+}
+
+message WriteTagResponse {
+  InstanceInfo instance = 1;
+  string tag_name = 2;
+}
+
+message WriteBooleanRequest {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  bool value = 3;
+}
+
+message WriteCharRequest {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  bytes value = 3;
+}
+
+message WriteWCharRequest {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  bytes value = 3;
+}
+
+message WriteDoubleRequest {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  double value = 3;
+}
+
+message WriteFloatRequest {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  float value = 3;
+}
+
+message WriteInt8Request {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  int32 value = 3;
+}
+
+message WriteInt16Request {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  int32 value = 3;
+}
+
+message WriteInt32Request {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  int32 value = 3;
+}
+
+message WriteInt64Request {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  int64 value = 3;
+}
+
+message WriteUInt8Request {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  uint32 value = 3;
+}
+
+message WriteUInt16Request {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  uint32 value = 3;
+}
+
+message WriteUInt32Request {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  uint32 value = 3;
+}
+
+message WriteUInt64Request {
+  InstanceInfoRequest instance = 1;
+  string tag_name = 2;
+  uint64 value = 3;
+}
+
+service VirtualControllerService 
 {
-  rpc GetVersion(GetVersionRequest) returns (GetVersionResponse);
-  rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
-  rpc GetRegisteredInstances(GetInstancesRequest) returns (GetInstancesResponse);
-  rpc RegisterInstance(RegisterInstanceRequest) returns (RegisterInstanceResponse);
-  rpc GetPlcInformation(GetPlcInformationRequest) returns (GetPlcInformationResponse);
+  rpc SetStoragePath (SetStoragePathRequest) returns (SetStoragePathResponse);
+  rpc CreateStorageArchive (CreateStorageArchiveRequest) returns (CreateStorageArchiveResponse);
+  rpc RetrieveStorageArchive (RetrieveStorageArchiveRequest) returns (RetrieveStorageArchiveResponse);
+  rpc CleanupControllerStorage (CleanupControllerStorageRequest) returns (CleanupControllerStorageResponse);
+  rpc ControllerPowerOn (ControllerPowerOnRequest) returns (ControllerPowerOnResponse);
+  rpc ControllerPowerOff (ControllerPowerOffRequest) returns (ControllerPowerOffResponse);
+  rpc ControllerRun (ControllerRunRequest) returns (ControllerRunResponse);
+  rpc ControllerStop (ControllerStopRequest) returns (ControllerStopResponse);
+  rpc ControllerMemoryReset (ControllerStopRequest) returns (ControllerStopResponse);
+  rpc GetTagInfo (GetTagInfoRequest) returns (GetTagInfoResponse);
+  rpc UpdateTagList (UpdateTagListRequest) returns (UpdateTagListResponse);
+  rpc GetTagListStatus (GetTagListStatusRequest) returns (GetTagListStatusResponse);
+  rpc CreateConfigFile (CreateConfigFileRequest) returns (CreateConfigFileResponse);
+  rpc ReadBoolean (ReadTagRequest) returns (ReadBooleanResponse);
+  rpc ReadChar (ReadTagRequest) returns (ReadCharResponse);
+  rpc ReadWChar (ReadTagRequest) returns (ReadWCharResponse);
+  rpc ReadDouble (ReadTagRequest) returns (ReadDoubleResponse);
+  rpc ReadFloat (ReadTagRequest) returns (ReadFloatResponse);
+  rpc ReadInt8 (ReadTagRequest) returns (ReadInt8Response);
+  rpc ReadInt16 (ReadTagRequest) returns (ReadInt16Response);
+  rpc ReadInt32 (ReadTagRequest) returns (ReadInt32Response);
+  rpc ReadInt64 (ReadTagRequest) returns (ReadInt64Response);
+  rpc ReadUInt8 (ReadTagRequest) returns (ReadUInt8Response);
+  rpc ReadUInt16 (ReadTagRequest) returns (ReadUInt16Response);
+  rpc ReadUInt32 (ReadTagRequest) returns (ReadUInt32Response);
+  rpc ReadUInt64 (ReadTagRequest) returns (ReadUInt64Response);
+  rpc WriteBoolean (WriteBooleanRequest) returns (WriteTagResponse);
+  rpc WriteChar (WriteCharRequest) returns (WriteTagResponse);
+  rpc WriteWChar (WriteWCharRequest) returns (WriteTagResponse);
+  rpc WriteDouble (WriteDoubleRequest) returns (WriteTagResponse);
+  rpc WriteFloat (WriteFloatRequest) returns (WriteTagResponse);
+  rpc WriteInt8 (WriteInt8Request) returns (WriteTagResponse);
+  rpc WriteInt16 (WriteInt16Request) returns (WriteTagResponse);
+  rpc WriteInt32 (WriteInt32Request) returns (WriteTagResponse);
+  rpc WriteInt64 (WriteInt64Request) returns (WriteTagResponse);
+  rpc WriteUInt8 (WriteUInt8Request) returns (WriteTagResponse);
+  rpc WriteUInt16 (WriteUInt16Request) returns (WriteTagResponse);
+  rpc WriteUInt32 (WriteUInt32Request) returns (WriteTagResponse);
+  rpc WriteUInt64 (WriteUInt64Request) returns (WriteTagResponse);
+}
+
+/* Service that is used to interact with a PLCSim plc */
+service PlcSimService
+{
+  rpc GetVersion (GetVersionRequest) returns (GetVersionResponse);
+  rpc Shutdown (ShutdownRequest) returns (ShutdownResponse);
+  rpc GetRegisteredInstances (GetInstancesRequest) returns (GetInstancesResponse);
+  rpc RegisterInstance (RegisterInstanceRequest) returns (RegisterInstanceResponse);
+  rpc GetPlcInformation (GetPlcInformationRequest) returns (GetPlcInformationResponse);
+  rpc UnregisterInstance (UnregisterInstanceRequest) returns (UnregisterInstanceResponse);
 }
