@@ -390,7 +390,7 @@ public sealed class PlcInstance : IDisposable
     /// <summary>
     /// Get the current status for the tag list
     /// </summary>
-    /// <param name="details">The resulting details, when None a <see cref="UpdateTagList"/> is required</param>
+    /// <param name="details">The resulting details, when None a call to <see cref="UpdateTagList"/> is required</param>
     /// <param name="hmiVisibleOnly">When set to true, only tags that are marked as hmi visible are visible</param>
     /// <exception cref="SimulationRuntimeException"></exception>
     public void GetTagListStatus(out ETagListDetails details, out bool hmiVisibleOnly)
@@ -417,7 +417,7 @@ public sealed class PlcInstance : IDisposable
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(filePath));
 
         if (!Path.HasExtension(filePath))
-            throw new ArgumentException("The filePath does not contain a filePath", nameof(filePath));
+            throw new ArgumentException("The filePath does not contain a file extension", nameof(filePath));
 
         if (File.Exists(filePath))
         {
