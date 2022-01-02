@@ -31,10 +31,19 @@ public class PlcSimService : PlcSimAdvanced.Protos.PlcSimService.PlcSimServiceBa
 
 #endregion
 
-    public override Task<GetVersionResponse> GetVersion(GetVersionRequest request, ServerCallContext context)
+    public override async Task<GetVersionResponse> GetVersion(GetVersionRequest request, ServerCallContext context)
     {
         _logger.LogTrace("GetVersion invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         GetVersionResponse response = new()
         {
             MajorVersion = _gateway.Version.Major,
@@ -42,13 +51,22 @@ public class PlcSimService : PlcSimAdvanced.Protos.PlcSimService.PlcSimServiceBa
             Valid = _gateway.Version.Valid
         };
 
-        return Task.FromResult(response);
+        return response;
     }
 
     public override async Task<ShutdownResponse> Shutdown(ShutdownRequest request, ServerCallContext context)
     {
         _logger.LogTrace($"{nameof(Shutdown)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         try
         {
             _gateway.Shutdown();
@@ -72,6 +90,15 @@ public class PlcSimService : PlcSimAdvanced.Protos.PlcSimService.PlcSimServiceBa
     {
         _logger.LogTrace($"{nameof(GetRegisteredInstances)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         try
         {
             var instances = _gateway.RegisteredInstances;
@@ -104,6 +131,15 @@ public class PlcSimService : PlcSimAdvanced.Protos.PlcSimService.PlcSimServiceBa
     {
         _logger.LogTrace($"{nameof(RegisterInstance)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         // Validate arguments
         if (string.IsNullOrWhiteSpace(request.Name))
         {
@@ -193,6 +229,15 @@ public class PlcSimService : PlcSimAdvanced.Protos.PlcSimService.PlcSimServiceBa
     {
         _logger.LogTrace($"{nameof(UnregisterInstance)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -228,6 +273,15 @@ public class PlcSimService : PlcSimAdvanced.Protos.PlcSimService.PlcSimServiceBa
     {        
         _logger.LogTrace($"{nameof(GetPlcInformation)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         PlcInstance? plcInstance = null;
         
         if (plcInstance is null)

@@ -25,6 +25,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ControllerRun)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
         
         if (plcInstance is null)
@@ -72,6 +81,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ControllerStop)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -119,6 +137,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ControllerMemoryReset)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -166,6 +193,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ControllerPowerOff)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -214,6 +250,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ControllerPowerOn)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -262,6 +307,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(CleanupControllerStorage)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -301,6 +355,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(CreateConfigFile)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -388,6 +451,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(CreateStorageArchive)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -448,6 +520,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(RetrieveStorageArchive)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -509,6 +590,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(GetTagInfo)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -578,6 +668,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(SetStoragePath)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -629,6 +728,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(UpdateTagList)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -676,6 +784,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(GetTagListStatus)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -719,6 +836,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadChar)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -770,6 +896,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadBoolean)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -821,6 +956,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadDouble)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -872,6 +1016,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadFloat)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -923,6 +1076,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadInt8)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -974,6 +1136,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadInt16)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1025,6 +1196,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadInt32)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1076,6 +1256,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadInt64)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1127,6 +1316,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadUInt8)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1178,6 +1376,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadUInt16)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1229,6 +1436,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadUInt32)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1280,6 +1496,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadUInt64)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1331,6 +1556,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(ReadWChar)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1386,6 +1620,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteBoolean)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1437,6 +1680,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteChar)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1488,6 +1740,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteDouble)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1539,6 +1800,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteFloat)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1590,6 +1860,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteInt8)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1641,6 +1920,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteInt16)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1692,6 +1980,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteInt32)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1743,6 +2040,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteInt64)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1794,6 +2100,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteUInt8)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1845,6 +2160,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteUInt16)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1896,6 +2220,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteUInt32)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1947,6 +2280,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteUInt64)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
@@ -1998,6 +2340,15 @@ public class ControllerService : VirtualControllerService.VirtualControllerServi
     {
         _logger.LogTrace($"{nameof(WriteWChar)} invoked via GRPC");
 
+#if DEBUG_MAC
+        await context.WriteResponseHeadersAsync(
+            new() {
+                new(
+                    "Simulation", 
+                    "Caution the server will provide simulated data")
+            });
+#endif
+        
         var plcInstance = await _plcManager.GetPlcInstanceAsync(request.Instance, context.CancellationToken);
 
         if (plcInstance is null)
