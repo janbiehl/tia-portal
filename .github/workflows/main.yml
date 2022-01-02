@@ -2,9 +2,9 @@ name: .NET
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -24,9 +24,9 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet publish -c Release -o application
+      run: dotnet publish -c Release -o application --no-restore
     - name: Upload
       uses: actions/upload-artifact@v2
       with:
         name: application
-        path: "/application"
+        path: "/home/runner/work/tia-portal/tia-portal/application/"
