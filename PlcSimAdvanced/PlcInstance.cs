@@ -4,7 +4,7 @@ namespace PlcSimAdvanced;
 
 public sealed class PlcInstance : IDisposable
 {
-    private const uint DefaultTimeout = 60000;
+    public const uint DefaultTimeout = 60000;
     private readonly IInstance _instance;
 
 #region Common
