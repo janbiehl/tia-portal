@@ -14,6 +14,7 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Debug Mac|Any CPU = Debug Mac|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F9D449F5-D60B-4326-A77C-6F35D80A466D} = {F6597253-2D74-4549-9420-72E12357669A}
@@ -25,13 +26,19 @@ Global
 		{F9D449F5-D60B-4326-A77C-6F35D80A466D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9D449F5-D60B-4326-A77C-6F35D80A466D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9D449F5-D60B-4326-A77C-6F35D80A466D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9D449F5-D60B-4326-A77C-6F35D80A466D}.Debug Mac|Any CPU.ActiveCfg = Debug Mac|Any CPU
+		{F9D449F5-D60B-4326-A77C-6F35D80A466D}.Debug Mac|Any CPU.Build.0 = Debug Mac|Any CPU
 		{64774A0E-36AB-4D94-A0EE-A08D2CAE5F45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{64774A0E-36AB-4D94-A0EE-A08D2CAE5F45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64774A0E-36AB-4D94-A0EE-A08D2CAE5F45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64774A0E-36AB-4D94-A0EE-A08D2CAE5F45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64774A0E-36AB-4D94-A0EE-A08D2CAE5F45}.Debug Mac|Any CPU.ActiveCfg = Debug Mac|Any CPU
+		{64774A0E-36AB-4D94-A0EE-A08D2CAE5F45}.Debug Mac|Any CPU.Build.0 = Debug Mac|Any CPU
 		{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6}.Debug Mac|Any CPU.ActiveCfg = Debug Mac|Any CPU
+		{7FDCAEA7-505D-4472-9CC8-4F20A33E79D6}.Debug Mac|Any CPU.Build.0 = Debug Mac|Any CPU
 	EndGlobalSection
 EndGlobal

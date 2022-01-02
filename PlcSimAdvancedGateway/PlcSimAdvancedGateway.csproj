@@ -7,6 +7,8 @@
         <Nullable>enable</Nullable>
         <AssemblyName>PlcSimAdvancedGateway</AssemblyName>
         <RootNamespace>PlcSimAdvancedGateway</RootNamespace>
+        <Configurations>Debug;Release;Debug Mac</Configurations>
+        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
