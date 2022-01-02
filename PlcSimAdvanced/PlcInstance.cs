@@ -165,8 +165,8 @@ public sealed class PlcInstance : IDisposable
         if (string.IsNullOrWhiteSpace(filePath))
             throw new ArgumentException(ExceptionUtils.InvalidStringMessage, nameof(filePath));
 
-        if (!Path.HasExtension(filePath))
-            throw new ArgumentException("There is no file extension", nameof(filePath));
+        //if (!Path.HasExtension(filePath))
+        //    throw new ArgumentException("There is no file extension", nameof(filePath));
 
         if (_instance.OperatingState != EOperatingState.Off)
             throw new InvalidOperationException(
